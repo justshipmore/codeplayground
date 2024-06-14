@@ -1,6 +1,6 @@
 export default function ConsolePanel() {
   return (
-    <section className="flex flex-col py-4 px-6 bg-neutral-950 col-span-2">
+    <section className="flex flex-col py-4 px-6 bg-neutral-950 col-span-2 justify-end">
       <div className="text-neutral-300 text-sm flex-grow">
         Content goes here
       </div>
