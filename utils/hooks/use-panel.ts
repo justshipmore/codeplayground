@@ -7,17 +7,22 @@ export default function usePanel() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const togglePanel = (panel: typeof PANELS[number]) => {
+  const togglePanel = (panel: (typeof PANELS)[number]) => {
     const params = new URLSearchParams(searchParams);
-    params.set(OPEN_PANELS_PARAM_NAME, panel.slug);
+    if (panel.type === "layout") {
+      searchParams.get(OPEN_PANELS_PARAM_NAME) == panel.slug
+        ? params.delete(OPEN_PANELS_PARAM_NAME, panel.slug)
+        : params.set(OPEN_PANELS_PARAM_NAME, panel.slug);
+    } else {
+      params.set(OPEN_PANELS_PARAM_NAME, panel.slug);
+    }
     replace(`${pathname}?${params.toString()}`);
-    console.log('oparams: ', params)
   };
 
-  const isPanelOpen = (panel: typeof PANELS[number]) => {
+  const isPanelOpen = (panel: (typeof PANELS)[number]) => {
     const openPanels = searchParams.get(OPEN_PANELS_PARAM_NAME);
     return openPanels == panel.slug ? true : false;
-  }
+  };
 
-  return { togglePanel, isPanelOpen }
+  return { togglePanel, isPanelOpen };
 }
