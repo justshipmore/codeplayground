@@ -1,4 +1,5 @@
-import { useSearchParams } from "next/navigation";
+"use client";
+
 import { PANELS } from "../constants/panels";
 import { OPEN_PANELS_PARAM_NAME } from "../constants/params";
 import { useEffect } from "react";
@@ -7,13 +8,13 @@ import useQueryString from "./use-query-string";
 const DEFAULT_OPEN_PANEL = "html";
 
 export default function usePanel() {
-  const searchParams = useSearchParams();
   const { setArrayParams, parseArrayParams } = useQueryString<string[]>(
     OPEN_PANELS_PARAM_NAME
   );
+  const openPanels = parseArrayParams();
 
   useEffect(() => {
-    setArrayParams([DEFAULT_OPEN_PANEL]);
+    if (!openPanels) setArrayParams([DEFAULT_OPEN_PANEL]);
   }, []);
 
   const processOpenPanels = (
@@ -35,7 +36,6 @@ export default function usePanel() {
   };
 
   const togglePanel = (panel: (typeof PANELS)[number]) => {
-    const openPanels = parseArrayParams();
     const formattedOpenPanels =
       typeof openPanels === "string" ? [openPanels] : (openPanels as string[]);
     const processedOpenPanels = processOpenPanels(formattedOpenPanels, panel);
@@ -43,7 +43,7 @@ export default function usePanel() {
   };
 
   const isPanelOpen = (panel: (typeof PANELS)[number]) => {
-    const openPanels = searchParams.get(OPEN_PANELS_PARAM_NAME)?.split(',');
+    if (!openPanels) return false;
     return openPanels?.includes(panel.slug);
   };
 
