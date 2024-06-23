@@ -43,8 +43,8 @@ export default function usePanel() {
   };
 
   const isPanelOpen = (panel: (typeof PANELS)[number]) => {
-    const openPanels = searchParams.get(OPEN_PANELS_PARAM_NAME);
-    return openPanels == panel.slug ? true : false;
+    const openPanels = searchParams.get(OPEN_PANELS_PARAM_NAME)?.split(',');
+    return openPanels?.includes(panel.slug);
   };
 
   return { togglePanel, isPanelOpen };
