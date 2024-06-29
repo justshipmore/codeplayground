@@ -5,7 +5,7 @@ import "codemirror/theme/material.css";
 import { useEffect, useRef, useState } from "react";
 import { Controlled as ControlledEditor } from "react-codemirror2";
 
-// need to avoid throwing a ReferenceError of navigator is not defined
+// needed to avoid throwing a ReferenceError of navigator is not defined
 let languageLoaded = false;
 if (typeof window !== "undefined" && typeof window.navigator !== "undefined") {
   require("codemirror/mode/xml/xml");
@@ -51,6 +51,7 @@ export default function Editor({
           mode: language,
           theme: "material",
           lineNumbers: true,
+          autofocus: true,
         }}
         // fix to remove duplicate editor bug in react-codemirror2: https://github.com/scniro/react-codemirror2/issues/284
         editorDidMount={(editorElement) => {

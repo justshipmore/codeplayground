@@ -82,4 +82,9 @@
 
 .CodeMirror {
   height: 100% !important;
+  background-color: #171717 !important;
+}
+
+.CodeMirror-gutter {
+  background-color: #171717 !important;
 }
